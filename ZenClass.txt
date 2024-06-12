@@ -1,0 +1,217 @@
+DB Design Zenclass:
+
+Use zenclass;
+
+-------------------------------------  Course Table   -----------------------------------------------
+Create Table Course(
+Course_id int Primary Key Not null Auto_increment,
+Course_name VARCHAR(25) Not null ,
+Course_Duration VARCHAR(10) Not null ,
+Course_type VARCHAR(15) Not null
+);
+
+insert into Course(Course_id,Course_name,Course_Duration,Course_type) values("1","Fullstack Development","3Hrs","MERN Stack");
+
+Select * From Course ;
+
+-------------------------------------  Batch Table   -----------------------------------------------
+
+Create Table Batch(
+Batch_id int Primary Key Not null Auto_increment ,
+Batch_name VARCHAR(15) Not null,
+Batch_time VARCHAR(15) Not null
+);
+
+insert into Batch(Batch_id,Batch_name,Batch_time) values
+("1","FSD58WDTamil","Mor:10am-1am");
+
+UPDATE Batch SET Batch_time = "Mor:10am-1pm"
+WHERE Batch_id  = 1;
+
+Select * From Batch ; 
+
+-------------------------------------  Student Table   -----------------------------------------------
+
+Create Table Student(
+Std_id int Primary Key Not null Auto_increment ,
+Std_firstname VARCHAR(25) Not null,
+Std_lastname VARCHAR(15) Not null ,
+Std_email VARCHAR(30) Not null ,
+Std_phone VARCHAR(30) Not null ,
+Course_id int Not null ,
+Batch_id int Not null ,
+Foreign Key (Course_id) references Course(Course_id) ,
+Foreign Key (Batch_id) references Batch(Batch_id)
+);
+
+insert into Student (Std_id,Std_firstname,Std_lastname,Std_email,Std_phone,Course_id,Batch_id) values
+("1","John","Doe","john@gmail.com","9856247360","1","1"),
+("2","Mary","Doe","mary@gmail.com","963258410","1","1"),
+("3","Henry","Smith","smi@gmail.com","9874563210","1","1"),
+("4","Bala","Krishnan","bal@gmail.com","9632105487","1","1"),
+("5","Raja","Kamal","raj@gmail.com","8856231470","1","1");
+
+Select * From Student;
+
+-------------------------------------  Mentor Table   -----------------------------------------------
+
+Create Table Mentor(
+Men_id int Primary Key Not null Auto_increment ,
+Men_name VARCHAR(25) Not null ,
+Men_email VARCHAR(30) Not null ,
+Batch_id int Not null ,
+Foreign Key (Batch_id) references Batch(Batch_id) 
+);
+
+insert into Mentor (Men_id,Men_name,Men_email,Batch_id) values
+("1","Rupan Chakravarthy","chak@gmail.com","2");
+
+Select * From Mentor;
+
+-------------------------------------  Topic Table   -----------------------------------------------
+
+Create Table Topic(
+Topic_id int Primary Key Not null Auto_increment,
+Topic_name VARCHAR(25) Not null ,
+Topic_date VARCHAR(30) Not null ,
+Men_id int Not null ,
+Foreign Key (Men_id) references Mentor(Men_id) 
+);
+
+insert into Topic (Topic_id,Topic_name,Topic_date,Men_id) values
+("1","HTML","2024.05.05","1"),("2","CSS","2024.05.10","1"),
+("3","Javascript","2024.05.12","1"),("4","React","2024.05.18","1"),
+("5","SQL","2024.05.23","1");
+
+Select * From Topic;
+
+-------------------------------------  Task Table   -----------------------------------------------
+
+Create Table Task(
+Task_id int Primary Key Not Null Auto_Increment ,
+Total_task int Not Null ,
+Submitted_task int Not Null ,
+Remaining_task int Not Null ,
+Task_status VARCHAR(20) Not Null ,
+Std_id int Not Null ,
+Foreign Key (Std_id) references Student(Std_id) 
+);
+
+insert into Task (Task_id,Total_task,Submitted_task,Remaining_task,Task_status,Std_id) values
+("1","6","4","2","Pending","1"),("2","6","6","0","Completed","2"),
+("3","6","5","1","Pending","3"),("4","6","0","6","Pending","4"),
+("5","6","6","0","Completed","5");
+
+Select * From Task;
+
+-------------------------------------  Codekata Table   -----------------------------------------------
+
+Create Table Codekata(
+Code_id int Primary Key Not Null Auto_increment,
+Total_problems int Not Null ,
+Total_complete int Not Null , 
+Std_id int Not Null ,
+Foreign Key (Std_id) references Student(Std_id) 
+);
+
+insert into Codekata (Code_id,Total_problems,Total_complete,Std_id) values
+("1","500","450","1"),("2","500","500","2"),
+("3","250","450","3"),("4","500","500","4"),
+("5","100","450","5");
+
+Select * From Codekata;
+
+-------------------------------------  Leaderboard Table   -----------------------------------------------
+
+Create Table Leaderboard(
+Lead_id int Primary Key Not Null Auto_increment,
+Completion_score Float(10) Not Null ,
+Task_score Float(10) Not Null ,
+Rank_position int Not Null ,
+Std_id int Not Null ,
+Foreign Key (Std_id) references Student(Std_id) 
+);
+
+insert into Leaderboard (Lead_id,Completion_score,Task_score,Rank_position,Std_id) values
+("1","96.55","88.5","1","1"),("2","90.5","85.35","2","2"),
+("3","89","87.75","3","3"),("4","60","45.5","4","4"),
+("5","38","35","5","5");
+
+Select * From Leaderboard ;
+
+-------------------------------------  Attentance Table   -----------------------------------------------
+
+Create Table Attentance(
+Att_id int Primary Key Not Null Auto_Increment ,
+Att_class VARCHAR(10) Not Null ,
+Std_id int Not Null ,
+Topic_id int Not Null ,
+Foreign Key (Std_id) references Student(Std_id) ,
+Foreign Key (Topic_id) references Topic(Topic_id)  
+);
+
+insert into Attentance (Att_id,Att_class,Std_id,Topic_id) values
+("1","True","1","1"),("2","False","2","2"),
+("3","False","3","3"),("4","True","4","4"),
+("5","True","5","5");
+
+Select * From Attetance;
+
+-------------------------------------  Company Drive Table   -----------------------------------------------
+
+Create Table Company_Drive(
+Company_id int Primary Key Not Null Auto_increment,
+Company_name VARCHAR(20) Not Null ,
+Interview_date Date Not Null ,
+Std_id int Not Null ,
+Foreign Key (Std_id) references Student(Std_id) 
+);
+
+insert into Company_Drive (Company_id,Company_name,Interview_date,Std_id) values
+("1","Apple","2024.07.05","1"),("2","Google","2024.07.15","2"),
+("3","Wipro","2024.07.10","3"),("4","Sales Force","2024.07.20","4"),("5","Novi Tech","2024.07.25","5");
+
+Select * From Company_Drive;
+
+-------------------------------------  Portfolio Table   -----------------------------------------------
+
+Create Table Portfolio(
+Port_id int Primary Key,
+Submit VARCHAR(20) ,
+Std_id int ,
+Foreign Key (Std_id) references Student(Std_id) 
+);
+
+insert into Portfolio(Port_id,Submit,Std_id) values
+("1","Submit","1"),("2","Submit","2"),("3","Not Submit","3"),("4","Submit","4"),("5","Not Submit","5");
+
+Select * From Portfolio;
+
+-------------------------------------  CapstoneTable   -----------------------------------------------
+
+Create Table Capstone(
+Caps_id int Primary Key Not Null Auto_increment,
+Deadline VARCHAR(15) Not Null ,
+Submit VARCHAR(20) Not Null ,
+Std_id int Not Null ,
+Foreign Key (Std_id) references Student(Std_id)  on delete restrict on update cascade
+);
+insert into Capstone(Caps_id,Deadline,Submit,Std_id) values
+("1","2024.05.05","Submit","1"),("2","2024.05.10","Not Submit","2"),("3","2024.05.12","Not Submit","3"),
+("4","2024.05.18","Submit","5"),("5","2024.05.23","Not Submit","5");
+
+Select * From Capstone;
+--------------------------------------------------------------------------------------------------------------------
+
+Describe Course;
+Describe Student;
+Describe Batch;
+Describe Mentor;
+Describe Codekata;
+Describe Topic;
+Describe Task;
+Describe Leaderboard;
+Describe Attence;
+Describe Company_Drive;
+Describe Portfolio;
+Describe Capstone;
