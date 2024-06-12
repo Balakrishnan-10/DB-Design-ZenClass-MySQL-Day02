@@ -2,6 +2,10 @@
 
 ## In this task I using MySQL workbench.
 
+## EER Diagram :
+
+![EER Diagram](https://github.com/Balakrishnan-10/DB-Design-ZenClass-MySQL-Day02/assets/157093363/3c02f881-85e0-4d20-8da4-8812f7844dd2)
+
 ## Query :
 
 * Show databases
@@ -23,12 +27,7 @@
 * Company_Drive
 * Portfolio
 * Capstone
-
-## EER Diagram :
-
-
-
-
+  
 ## Git Commands :
   
 ```git
